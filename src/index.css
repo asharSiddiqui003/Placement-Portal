@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Prevent text selection during test */
+.proctoring-active {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Disable text selection for all elements during test */
+.proctoring-active * {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Style for fullscreen mode */
+:-webkit-full-screen {
+  background-color: #f3f4f6;
+}
+
+:fullscreen {
+  background-color: #f3f4f6;
+}
