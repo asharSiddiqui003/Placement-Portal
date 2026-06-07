@@ -79,18 +79,20 @@ export const Landing = ({ onLogin, onRegister }: LandingProps) => {
         <div style={{ background: CREAM, color: INK, fontFamily: "'Inter', system-ui, sans-serif", minHeight: '100vh' }}>
 
             {/* ── NAV ── */}
-            <nav style={{
-                position: 'sticky',
-                top: 0,
-                zIndex: 100,
-                background: CREAM,
-                borderBottom: `1px solid rgba(17,17,16,0.12)`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '0 2.5rem',
-                height: '56px',
-            }}>
+            <nav 
+                className="px-4 md:px-10"
+                style={{
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 100,
+                    background: CREAM,
+                    borderBottom: `1px solid rgba(17,17,16,0.12)`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    height: '56px',
+                }}
+            >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                     <div style={{
                         width: '28px', height: '28px',
@@ -137,7 +139,10 @@ export const Landing = ({ onLogin, onRegister }: LandingProps) => {
             </nav>
 
             {/* ── HERO ── */}
-            <section style={{ padding: '6rem 3.5rem 5rem', maxWidth: '1180px', margin: '0 auto' }}>
+            <section 
+                className="px-6 py-16 md:px-14 md:py-24"
+                style={{ maxWidth: '1180px', margin: '0 auto' }}
+            >
                 <motion.div
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -219,20 +224,21 @@ export const Landing = ({ onLogin, onRegister }: LandingProps) => {
                 borderBottom: `1.5px solid rgba(17,17,16,0.12)`,
                 background: CREAM_DARK,
             }}>
-                <div style={{
-                    maxWidth: '1180px', margin: '0 auto',
-                    display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
-                }}>
+                <div 
+                    className="grid grid-cols-2 md:grid-cols-4"
+                    style={{ maxWidth: '1180px', margin: '0 auto' }}
+                >
                     {stats.map((s, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.08 + 0.3, duration: 0.4 }}
+                            className={`p-7 text-center border-[rgba(17,17,16,0.12)] ${i % 2 === 0 ? 'border-r' : ''} ${i < 2 ? 'border-b' : ''} md:border-b-0 md:border-r md:last:border-r-0`}
                             style={{
-                                padding: '1.8rem 1.5rem',
-                                borderRight: i < stats.length - 1 ? `1.5px solid rgba(17,17,16,0.12)` : 'none',
-                                textAlign: 'center',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
                             }}
                         >
                             <div style={{
@@ -290,7 +296,10 @@ export const Landing = ({ onLogin, onRegister }: LandingProps) => {
             </div>
 
             {/* ── FEATURES ── */}
-            <section style={{ padding: '7rem 3.5rem', maxWidth: '1180px', margin: '0 auto' }}>
+            <section 
+                className="px-6 py-16 md:px-14 md:py-28"
+                style={{ maxWidth: '1180px', margin: '0 auto' }}
+            >
                 {/* section label */}
                 <div style={{
                     display: 'flex', justifyContent: 'space-between',
@@ -315,12 +324,13 @@ export const Landing = ({ onLogin, onRegister }: LandingProps) => {
                 </div>
 
                 {/* 2×2 grid */}
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '0',
-                    border: `1.5px solid rgba(17,17,16,0.12)`,
-                }}>
+                <div 
+                    className="grid grid-cols-1 md:grid-cols-2"
+                    style={{
+                        gap: '0',
+                        border: `1.5px solid rgba(17,17,16,0.12)`,
+                    }}
+                >
                     {features.map((f, i) => (
                         <motion.div
                             key={i}
@@ -328,11 +338,9 @@ export const Landing = ({ onLogin, onRegister }: LandingProps) => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-60px' }}
                             transition={{ delay: (i % 2) * 0.1, duration: 0.45 }}
+                            className={`p-8 md:p-12 border-[rgba(17,17,16,0.12)] border-b last:border-b-0 md:border-b-0 ${i % 2 === 0 ? 'md:border-r' : ''} ${i < 2 ? 'md:border-b' : ''}`}
                             style={{
-                                padding: '3.2rem 2.8rem',
                                 minHeight: '260px',
-                                borderRight: i % 2 === 0 ? `1.5px solid rgba(17,17,16,0.12)` : 'none',
-                                borderBottom: i < 2 ? `1.5px solid rgba(17,17,16,0.12)` : 'none',
                                 transition: 'background 0.18s, color 0.18s',
                                 cursor: 'default',
                             }}
@@ -387,11 +395,10 @@ export const Landing = ({ onLogin, onRegister }: LandingProps) => {
             </section>
 
             {/* ── HOW IT WORKS ── */}
-            <section style={{
-                padding: '7rem 3.5rem 8rem',
-                maxWidth: '1180px',
-                margin: '0 auto',
-            }}>
+            <section 
+                className="px-6 py-16 md:px-14 md:py-28"
+                style={{ maxWidth: '1180px', margin: '0 auto' }}
+            >
                 <div style={{
                     display: 'flex', justifyContent: 'space-between',
                     alignItems: 'center', marginBottom: '3rem',
@@ -414,11 +421,10 @@ export const Landing = ({ onLogin, onRegister }: LandingProps) => {
                     </span>
                 </div>
 
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: '3.5rem',
-                }}>
+                <div 
+                    className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14"
+                    style={{}}
+                >
                     {[
                         {
                             step: '01',
@@ -477,13 +483,15 @@ export const Landing = ({ onLogin, onRegister }: LandingProps) => {
             </section>
 
             {/* ── CTA — FULL WIDTH FADE-IN ── */}
-            <section style={{
-                background: INK,
-                padding: '10rem 3.5rem',
-                minHeight: '80vh',
-                display: 'flex',
-                alignItems: 'center',
-            }}>
+            <section 
+                className="px-6 py-20 md:px-14 md:py-40"
+                style={{
+                    background: INK,
+                    minHeight: '80vh',
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -573,15 +581,14 @@ export const Landing = ({ onLogin, onRegister }: LandingProps) => {
             </section>
 
             {/* ── FOOTER ── */}
-            <footer style={{
-                borderTop: `1.5px solid rgba(17,17,16,0.1)`,
-                padding: '2rem 3.5rem',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                maxWidth: '1180px',
-                margin: '0 auto',
-            }}>
+            <footer 
+                className="flex flex-col md:flex-row justify-between items-center gap-4 px-6 md:px-14 py-8"
+                style={{
+                    borderTop: `1.5px solid rgba(17,17,16,0.1)`,
+                    maxWidth: '1180px',
+                    margin: '0 auto',
+                }}
+            >
                 <span style={{
                     fontFamily: "'Courier New', monospace",
                     fontSize: '0.65rem', opacity: 0.3,

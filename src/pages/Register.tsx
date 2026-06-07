@@ -66,10 +66,10 @@ export const Register = ({ onToggle, onBack }: RegisterProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        className="p-6 md:p-12"
         style={{
           background: '#fff',
           border: `1.5px solid rgba(17,17,16,0.12)`,
-          padding: '3rem',
           width: '100%',
           maxWidth: '640px',
           boxSizing: 'border-box',
@@ -135,7 +135,10 @@ export const Register = ({ onToggle, onBack }: RegisterProps) => {
         )}
 
         <form onSubmit={handleSubmit}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem', marginBottom: '1.2rem' }}>
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2"
+            style={{ gap: '1.2rem', marginBottom: '1.2rem' }}
+          >
             <div>
               <label style={{
                 display: 'block', fontSize: '0.78rem', fontWeight: '600',
@@ -258,7 +261,10 @@ export const Register = ({ onToggle, onBack }: RegisterProps) => {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.2rem', marginBottom: '2rem' }}>
+          <div
+            className="grid grid-cols-1 sm:grid-cols-3"
+            style={{ gap: '1.2rem', marginBottom: '2rem' }}
+          >
             <div>
               <label style={{
                 display: 'block', fontSize: '0.78rem', fontWeight: '600',
@@ -365,7 +371,7 @@ export const Register = ({ onToggle, onBack }: RegisterProps) => {
               padding: '0.85rem', fontSize: '0.88rem',
               fontWeight: '700', letterSpacing: '0.04em',
               textTransform: 'uppercase', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifycontent: 'center', gap: '0.5rem',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
               opacity: loading ? 0.6 : 1,
               transition: 'background 0.15s, color 0.15s',
             }}

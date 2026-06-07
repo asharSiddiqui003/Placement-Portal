@@ -49,10 +49,10 @@ export const Login = ({ onToggle, onBack }: LoginProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        className="p-6 md:p-12"
         style={{
           background: '#fff',
           border: `1.5px solid rgba(17,17,16,0.12)`,
-          padding: '3rem',
           width: '100%',
           maxWidth: '420px',
         }}
