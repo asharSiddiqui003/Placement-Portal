@@ -5,8 +5,6 @@ import { motion } from 'framer-motion';
 import {
   BarChart,
   Bar,
-  LineChart,
-  Line,
   PieChart,
   Pie,
   Cell,
@@ -55,11 +53,6 @@ export const Analytics = () => {
     { company: 'Apple', hires: 25 },
     { company: 'Netflix', hires: 18 },
   ];
-
-  const performanceData = attempts.map((attempt, idx) => ({
-    attempt: `Test ${idx + 1}`,
-    score: attempt.percentage,
-  }));
 
   const skillGapData = [
     { skill: 'DSA', proficiency: 75, target: 90 },
@@ -169,13 +162,13 @@ export const Analytics = () => {
                 data={companyHiringData}
                 cx="50%"
                 cy="50%"
+                label={({ payload }) => `${payload.company}: ${payload.hires}`}
                 labelLine={false}
-                label={({ company, hires }) => `${company}: ${hires}`}
                 outerRadius={100}
                 fill="#8884d8"
                 dataKey="hires"
               >
-                {companyHiringData.map((entry, index) => (
+                {companyHiringData.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
@@ -184,32 +177,6 @@ export const Analytics = () => {
           </ResponsiveContainer>
         </motion.div>
       </div>
-
-      {performanceData.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6"
-        >
-          <h2 className="text-xl font-bold mb-4">Your Performance Over Time</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={performanceData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="attempt" />
-              <YAxis domain={[0, 100]} />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="score"
-                stroke="#3B82F6"
-                strokeWidth={2}
-                name="Score (%)"
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </motion.div>
-      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <motion.div

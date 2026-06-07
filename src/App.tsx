@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Layout } from './components/Layout';
 import { Login } from './pages/Login';
@@ -9,11 +9,24 @@ import { QuestionBank } from './pages/QuestionBank';
 import { ResumeBuilder } from './pages/ResumeBuilder';
 import { Analytics } from './pages/Analytics';
 import { Profile } from './pages/Profile';
+import { Landing } from './pages/Landing';
 
 function AppContent() {
   const { user, loading } = useAuth();
+  const [showLanding, setShowLanding] = useState(true);
   const [showRegister, setShowRegister] = useState(false);
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [wasLoggedIn, setWasLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setWasLoggedIn(true);
+    } else if (wasLoggedIn && !user) {
+      setShowLanding(false);
+      setShowRegister(false);
+      setWasLoggedIn(false);
+    }
+  }, [user, wasLoggedIn]);
 
   if (loading) {
     return (
@@ -26,18 +39,27 @@ function AppContent() {
     );
   }
 
+  if (!user && showLanding) {
+    return (
+      <Landing
+        onLogin={() => { setShowLanding(false); setShowRegister(false); }}
+        onRegister={() => { setShowLanding(false); setShowRegister(true); }}
+      />
+    );
+  }
+
   if (!user) {
     return showRegister ? (
-      <Register onToggle={() => setShowRegister(false)} />
+      <Register onToggle={() => setShowRegister(false)} onBack={() => setShowLanding(true)} />
     ) : (
-      <Login onToggle={() => setShowRegister(true)} />
+      <Login onToggle={() => setShowRegister(true)} onBack={() => setShowLanding(true)} />
     );
   }
 
   const renderPage = () => {
     switch (currentPage) {
       case 'dashboard':
-        return <Dashboard />;
+        return <Dashboard onNavigate={setCurrentPage} />;
       case 'mock-tests':
         return <MockTests />;
       case 'questions':
@@ -49,7 +71,7 @@ function AppContent() {
       case 'profile':
         return <Profile />;
       default:
-        return <Dashboard />;
+        return <Dashboard onNavigate={setCurrentPage} />;
     }
   };
 

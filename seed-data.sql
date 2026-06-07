@@ -103,6 +103,196 @@ INSERT INTO mock_tests (id, title, company, duration, questions) VALUES
         "correctAnswer": 2
       }
     ]'::jsonb
+  ),
+  (
+    gen_random_uuid(),
+    'Google Front-End Engineer Assessment',
+    'Google',
+    45,
+    '[
+      {
+        "id": "g1",
+        "question": "Which HTML5 tag is used to specify a footer for a document or section?",
+        "options": ["<footer>", "<bottom>", "<section>", "<aside>"],
+        "correctAnswer": 0
+      },
+      {
+        "id": "g2",
+        "question": "What is the purpose of the useEffect clean-up function in React?",
+        "options": ["To run code before component unmounts", "To update component state", "To optimize component rendering", "To fetch API data"],
+        "correctAnswer": 0
+      },
+      {
+        "id": "g3",
+        "question": "Which CSS property is used to change the text color of an element?",
+        "options": ["font-color", "text-color", "color", "background-color"],
+        "correctAnswer": 2
+      },
+      {
+        "id": "g4",
+        "question": "What is the behavior of Promise.all()?",
+        "options": ["Runs all promises in sequence", "Rejects immediately if any input promise rejects", "Resolves only if all promises reject", "None of the above"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "g5",
+        "question": "Which of the following is NOT a JavaScript primitive data type?",
+        "options": ["Undefined", "Boolean", "Float", "Symbol"],
+        "correctAnswer": 2
+      }
+    ]'::jsonb
+  ),
+  (
+    gen_random_uuid(),
+    'Microsoft Software Engineering Test',
+    'Microsoft',
+    60,
+    '[
+      {
+        "id": "ms1",
+        "question": "What is a deadlock in operating systems?",
+        "options": ["A bug in code", "A state where processes are blocked waiting for each other", "A thread crash", "Memory corruption"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "ms2",
+        "question": "Which SQL join returns all records when there is a match in either left or right table?",
+        "options": ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN"],
+        "correctAnswer": 3
+      },
+      {
+        "id": "ms3",
+        "question": "What is the primary purpose of an index in a database?",
+        "options": ["To encrypt data", "To speed up data retrieval", "To save space", "To prevent duplicate records"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "ms4",
+        "question": "In cryptography, what is the role of a private key?",
+        "options": ["To encrypt data publicly", "To decrypt data encrypted with public key", "To share with anyone", "To verify server IP"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "ms5",
+        "question": "Which protocol is used to resolve IP addresses to MAC addresses?",
+        "options": ["DNS", "DHCP", "ARP", "NAT"],
+        "correctAnswer": 2
+      }
+    ]'::jsonb
+  ),
+  (
+    gen_random_uuid(),
+    'Meta Coding Assessment',
+    'Meta',
+    60,
+    '[
+      {
+        "id": "fb1",
+        "question": "Given an array, how can we find if it contains any duplicate in O(N) time and O(N) space?",
+        "options": ["Nested loops", "Sorting", "HashSet", "Binary search"],
+        "correctAnswer": 2
+      },
+      {
+        "id": "fb2",
+        "question": "What is the time complexity of looking up a key in a Hash Map (average case)?",
+        "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+        "correctAnswer": 0
+      },
+      {
+        "id": "fb3",
+        "question": "Which traversal of a Binary Search Tree (BST) outputs elements in sorted order?",
+        "options": ["Pre-order", "In-order", "Post-order", "Level-order"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "fb4",
+        "question": "What is the space complexity of recursive depth-first search (DFS) on a tree of height H?",
+        "options": ["O(1)", "O(H)", "O(N)", "O(2^H)"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "fb5",
+        "question": "Which design pattern ensures a class has only one instance and provides a global point of access?",
+        "options": ["Factory", "Observer", "Singleton", "Adapter"],
+        "correctAnswer": 2
+      }
+    ]'::jsonb
+  ),
+  (
+    gen_random_uuid(),
+    'TCS NQT Prep Test',
+    'General',
+    45,
+    '[
+      {
+        "id": "tcs1",
+        "question": "Find the odd one out from the following prime-like series: 3, 5, 7, 9, 11, 13",
+        "options": ["3", "9", "11", "13"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "tcs2",
+        "question": "A sum of money doubles itself in 8 years at simple interest. What is the rate of interest per annum?",
+        "options": ["10%", "12.5%", "15%", "20%"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "tcs3",
+        "question": "If WATER is coded as YCVGT, how is H2O coded in the same scheme?",
+        "options": ["J4Q", "I3P", "J3Q", "K4R"],
+        "correctAnswer": 0
+      },
+      {
+        "id": "tcs4",
+        "question": "A train 150m long passes a telegraph post in 12 seconds. What is the speed of the train in km/h?",
+        "options": ["36 km/h", "45 km/h", "54 km/h", "60 km/h"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "tcs5",
+        "question": "The average of 5 consecutive numbers is 20. What is the largest of these numbers?",
+        "options": ["20", "21", "22", "23"],
+        "correctAnswer": 2
+      }
+    ]'::jsonb
+  ),
+  (
+    gen_random_uuid(),
+    'SQL & Database Systems Test',
+    'General',
+    30,
+    '[
+      {
+        "id": "db1",
+        "question": "Which normal form deals with removing transitive dependencies?",
+        "options": ["1NF", "2NF", "3NF", "BCNF"],
+        "correctAnswer": 2
+      },
+      {
+        "id": "db2",
+        "question": "What does the I (Isolation) in ACID transaction properties ensure?",
+        "options": ["Database is secure", "Transactions execute independently without interference", "Changes are permanent", "Only authorized users access data"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "db3",
+        "question": "Which is a major difference between TRUNCATE and DELETE in SQL?",
+        "options": ["DELETE is DML and can be rolled back; TRUNCATE is DDL and cannot", "TRUNCATE resets identity counters; DELETE does not", "TRUNCATE is faster as it does not log individual row deletions", "All of the above"],
+        "correctAnswer": 3
+      },
+      {
+        "id": "db4",
+        "question": "Which SQL clause is used to filter records after applying aggregation and grouping?",
+        "options": ["WHERE", "HAVING", "GROUP BY", "ORDER BY"],
+        "correctAnswer": 1
+      },
+      {
+        "id": "db5",
+        "question": "What type of relationship is represented using a junction/associative table?",
+        "options": ["One-to-One", "One-to-Many", "Many-to-Many", "None"],
+        "correctAnswer": 2
+      }
+    ]'::jsonb
   )
 ON CONFLICT DO NOTHING;
 

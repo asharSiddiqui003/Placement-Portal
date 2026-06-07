@@ -26,7 +26,11 @@ interface CompanyQuestionCount {
   count: number;
 }
 
-export const Dashboard = () => {
+interface DashboardProps {
+  onNavigate?: (page: string, params?: any) => void;
+}
+
+export const Dashboard = ({ onNavigate }: DashboardProps) => {
   const { profile } = useAuth();
   const [stats, setStats] = useState<Stats>({
     companiesApplied: 0,
@@ -88,10 +92,15 @@ export const Dashboard = () => {
   };
 
   const modules = [
-    { name: 'DSA Practice', icon: Code, color: 'bg-blue-500', href: '/questions' },
-    { name: 'Aptitude Tests', icon: Brain, color: 'bg-green-500', href: '/mock-tests' },
-    { name: 'System Design', icon: Network, color: 'bg-purple-500', href: '/questions' },
+    { name: 'DSA Practice', icon: Code, color: 'bg-blue-500', page: 'questions' },
+    { name: 'Aptitude Tests', icon: Brain, color: 'bg-green-500', page: 'mock-tests' },
   ];
+
+  const handleNavigation = (page: string, params?: any) => {
+    if (onNavigate) {
+      onNavigate(page, params);
+    }
+  };
 
   return (
     <div className="p-6 space-y-6">
@@ -170,21 +179,21 @@ export const Dashboard = () => {
             <TrendingUp className="w-5 h-5 text-blue-600" />
             Placement Prep Modules
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {modules.map((module, idx) => (
-              <a
+              <div
                 key={idx}
-                href={module.href}
+                onClick={() => handleNavigation(module.page)}
                 className="group p-6 border border-gray-200 rounded-xl hover:shadow-lg transition-all cursor-pointer"
               >
                 <div className={`${module.color} w-12 h-12 rounded-lg flex items-center justify-center mb-3`}>
                   <module.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">{module.name}</h3>
-                <button className="text-blue-600 text-sm font-medium group-hover:underline">
+                <span className="text-blue-600 text-sm font-medium group-hover:underline">
                   View →
-                </button>
-              </a>
+                </span>
+              </div>
             ))}
           </div>
         </motion.div>
@@ -201,7 +210,11 @@ export const Dashboard = () => {
           </h2>
           <div className="space-y-3">
             {companyQuestions.map((item, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div
+                key={idx}
+                onClick={() => handleNavigation('questions', { company: item.company })}
+                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+              >
                 <span className="font-medium text-gray-900">{item.company}</span>
                 <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">
                   {item.count} Qs
@@ -277,12 +290,12 @@ export const Dashboard = () => {
                   {test.company && (
                     <p className="text-sm text-gray-600">Company: {test.company}</p>
                   )}
-                  <a
-                    href={`/mock-tests/${test.id}`}
+                  <button
+                    onClick={() => handleNavigation('mock-tests', { testId: test.id })}
                     className="inline-block mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
                   >
                     Start Test
-                  </a>
+                  </button>
                 </div>
               ))
             ) : (

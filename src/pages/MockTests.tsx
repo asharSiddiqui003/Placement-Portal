@@ -2,14 +2,14 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase, MockTest, TestAttempt, Question } from '../lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Clock, Trophy, Filter, CheckCircle, XCircle, ChevronLeft, ChevronRight, 
-  Camera, Mic, Shield, AlertTriangle, Minimize2, Maximize2, Video, 
-  AlertCircle, X, Eye, EyeOff 
+import {
+  Clock, Trophy, Filter, CheckCircle, XCircle, ChevronLeft, ChevronRight,
+  Camera, Mic, Shield, AlertTriangle, Minimize2, Maximize2, Video,
+  AlertCircle, X, Eye, EyeOff
 } from 'lucide-react';
 
 // Types for proctoring
-type ViolationType = 
+type ViolationType =
   | 'tab_switch'
   | 'fullscreen_exit'
   | 'copy_attempt'
@@ -73,7 +73,7 @@ const useProctoring = (config: {
   const recordViolation = useCallback((type: ViolationType) => {
     setState(prev => {
       const newCount = prev.violationCount + 1;
-      
+
       const violationMessages = {
         tab_switch: '⚠️ Tab/window switch detected! Stay on test page.',
         fullscreen_exit: '⚠️ Fullscreen mode exited! Please re-enter fullscreen.',
@@ -144,16 +144,16 @@ const useProctoring = (config: {
     canvas.width = videoRef.current.videoWidth;
     canvas.height = videoRef.current.videoHeight;
     const ctx = canvas.getContext('2d');
-    
+
     if (ctx) {
       ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
       const snapshot = canvas.toDataURL('image/jpeg', 0.6);
-      
+
       setState(prev => ({
         ...prev,
         snapshots: [...prev.snapshots, snapshot].slice(-50),
       }));
-      
+
       return snapshot;
     }
     return null;
@@ -179,16 +179,16 @@ const useProctoring = (config: {
   const initFullscreenDetection = () => {
     const handleFullscreenChange = () => {
       const isFullscreenNow = !!document.fullscreenElement;
-      
+
       setState(prev => ({ ...prev, isFullscreen: isFullscreenNow }));
-      
+
       if (!isFullscreenNow && isFullscreenRef.current) {
         recordViolation('fullscreen_exit');
       }
-      
+
       isFullscreenRef.current = isFullscreenNow;
     };
-    
+
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   };
@@ -274,13 +274,13 @@ const useProctoring = (config: {
     if (!mediaGranted) return false;
 
     await requestFullscreen();
-    
+
     const cleanupVisibility = initVisibilityDetection();
     const cleanupFullscreen = initFullscreenDetection();
     const cleanupEvents = initEventBlockers();
-    
+
     cleanupFunctionsRef.current = [cleanupVisibility, cleanupFullscreen, cleanupEvents];
-    
+
     return true;
   };
 
@@ -297,17 +297,17 @@ const useProctoring = (config: {
     if (snapshotIntervalRef.current) {
       clearInterval(snapshotIntervalRef.current);
     }
-    
+
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(track => track.stop());
     }
-    
+
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
-    
+
     cleanupFunctionsRef.current.forEach(cleanup => cleanup());
-    
+
     if (document.fullscreenElement) {
       document.exitFullscreen();
     }
@@ -330,9 +330,9 @@ const useProctoring = (config: {
 };
 
 // Permission Modal Component
-const ProctoringPermissionModal = ({ onAccept, onDecline, testName }: { 
-  onAccept: () => void; 
-  onDecline: () => void; 
+const ProctoringPermissionModal = ({ onAccept, onDecline, testName }: {
+  onAccept: () => void;
+  onDecline: () => void;
   testName: string;
 }) => {
   const [countdown, setCountdown] = useState(5);
@@ -368,7 +368,7 @@ const ProctoringPermissionModal = ({ onAccept, onDecline, testName }: {
           <h2 className="text-2xl font-bold">Proctoring Required</h2>
           <p className="text-gray-600 mt-1">Maintaining test integrity for <strong>{testName}</strong></p>
         </div>
-        
+
         <div className="space-y-4 mb-6">
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
             <h3 className="font-semibold text-red-800 mb-2 flex items-center gap-2">
@@ -384,14 +384,14 @@ const ProctoringPermissionModal = ({ onAccept, onDecline, testName }: {
               <li>Your activity is being monitored</li>
             </ul>
           </div>
-          
+
           <div className="bg-yellow-50 p-3 rounded-lg">
             <h3 className="font-semibold mb-2 flex items-center gap-2">
               <Camera className="w-4 h-4" />
               Privacy Notice
             </h3>
             <p className="text-sm">
-              Your camera snapshots and activity logs are only stored for this attempt 
+              Your camera snapshots and activity logs are only stored for this attempt
               and will be reviewed for academic integrity purposes only.
             </p>
           </div>
@@ -406,7 +406,7 @@ const ProctoringPermissionModal = ({ onAccept, onDecline, testName }: {
             </ol>
           </div>
         </div>
-        
+
         <div className="flex gap-3">
           <button
             onClick={onDecline}
@@ -417,11 +417,10 @@ const ProctoringPermissionModal = ({ onAccept, onDecline, testName }: {
           <button
             onClick={() => setAccepted(true)}
             disabled={accepted}
-            className={`flex-1 px-4 py-2 rounded-lg font-semibold transition-all ${
-              accepted 
-                ? 'bg-blue-400 cursor-not-allowed' 
+            className={`flex-1 px-4 py-2 rounded-lg font-semibold transition-all ${accepted
+                ? 'bg-blue-400 cursor-not-allowed'
                 : 'bg-blue-600 hover:bg-blue-700'
-            } text-white`}
+              } text-white`}
           >
             {accepted ? `Starting in ${countdown}s...` : 'I Understand & Accept'}
           </button>
@@ -570,12 +569,17 @@ export const MockTests = () => {
   }, [testStarted, timeLeft, testCompleted]);
 
   const fetchTests = async () => {
-    const { data } = await supabase
-      .from('mock_tests')
-      .select('*')
-      .order('created_at', { ascending: false });
+    try {
+      const { data, error } = await supabase
+        .from('mock_tests')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (data) setTests(data);
+      if (error) throw error;
+      if (data) setTests(data);
+    } catch (error) {
+      console.error('Error fetching mock tests:', error);
+    }
   };
 
   const fetchAttempts = async () => {
@@ -598,7 +602,7 @@ export const MockTests = () => {
   const handleAcceptProctoring = async () => {
     setShowPermissionModal(false);
     const success = await initProctoring();
-    
+
     if (success) {
       setProctoringReady(true);
       setCurrentQuestion(0);
@@ -629,9 +633,9 @@ export const MockTests = () => {
     if (!selectedTest || !profile || isSubmitting) return;
 
     setIsSubmitting(true);
-    
+
     const proctoringData = getProctoringData();
-    
+
     setTestStarted(false);
     setTestCompleted(true);
 
@@ -661,7 +665,7 @@ export const MockTests = () => {
       flagged: proctoringData.violationCount > 0,
       completed_at: new Date().toISOString(),
     };
-    
+
     // Add violation_count if the column exists (it will be added after SQL migration)
     // If you haven't run the SQL yet, this will be ignored by Supabase
     insertData.violation_count = proctoringData.violationCount;
@@ -720,7 +724,7 @@ export const MockTests = () => {
             <WarningToast message={warningMessage} onClose={() => setWarningMessage(null)} />
           )}
         </AnimatePresence>
-        
+
         <CameraPreview
           videoRef={videoRef}
           violationCount={proctoringState.violationCount}
@@ -728,7 +732,7 @@ export const MockTests = () => {
           isFullscreen={proctoringState.isFullscreen}
           onFullscreenToggle={handleFullscreenToggle}
         />
-        
+
         <div className="p-6 max-w-5xl mx-auto pb-24">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="mb-6">
@@ -748,9 +752,9 @@ export const MockTests = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="w-full bg-gray-200 rounded-full h-2">
-                <div 
+                <div
                   className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}
                 />
@@ -763,11 +767,10 @@ export const MockTests = () => {
                 {question.options.map((option, idx) => (
                   <label
                     key={idx}
-                    className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                      answers[question.id] === idx
+                    className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${answers[question.id] === idx
                         ? 'border-blue-500 bg-blue-50'
                         : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/30'
-                    }`}
+                      }`}
                   >
                     <input
                       type="radio"
@@ -819,13 +822,12 @@ export const MockTests = () => {
                   <button
                     key={idx}
                     onClick={() => setCurrentQuestion(idx)}
-                    className={`w-10 h-10 rounded-xl font-semibold transition-all ${
-                      currentQuestion === idx
+                    className={`w-10 h-10 rounded-xl font-semibold transition-all ${currentQuestion === idx
                         ? 'bg-blue-600 text-white shadow-md'
                         : answers[questions[idx].id] !== undefined
-                        ? 'bg-green-100 text-green-700 border border-green-300'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
+                          ? 'bg-green-100 text-green-700 border border-green-300'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
                   >
                     {idx + 1}
                   </button>
@@ -896,7 +898,7 @@ export const MockTests = () => {
             {proctoringState.violationCount > 0 && (
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
                 <p className="text-sm text-yellow-800">
-                  ⚠️ Note: {proctoringState.violationCount} violation(s) were recorded during this test. 
+                  ⚠️ Note: {proctoringState.violationCount} violation(s) were recorded during this test.
                   Your results may be under review.
                 </p>
               </div>
@@ -961,13 +963,13 @@ export const MockTests = () => {
           onDecline={handleDeclineProctoring}
         />
       )}
-      
+
       <div className="p-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Mock Tests</h1>
           <p className="text-gray-600">Practice with company-specific and general aptitude tests</p>
           <div className="mt-2 bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-800">
-            <strong>📋 Test Guidelines:</strong> Camera access required. Fullscreen mode enforced. 
+            <strong>📋 Test Guidelines:</strong> Camera access required. Fullscreen mode enforced.
             Tab switching and copy/paste are prohibited. Maximum 3 violations allowed.
           </div>
         </div>
@@ -984,58 +986,67 @@ export const MockTests = () => {
               <option value="Amazon">Amazon</option>
               <option value="Google">Google</option>
               <option value="Microsoft">Microsoft</option>
+              <option value="Meta">Meta</option>
               <option value="General">General</option>
             </select>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {filteredTests.map((test) => {
-            const attempt = attempts.find((a) => a.test_id === test.id);
+        {filteredTests.length === 0 ? (
+          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center mb-8">
+            <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+            <h3 className="font-bold text-lg text-gray-800">No Tests Found</h3>
+            <p className="text-gray-600 mt-1">There are no mock tests matching this filter, or the database needs to be seeded.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {filteredTests.map((test) => {
+              const attempt = attempts.find((a) => a.test_id === test.id);
 
-            return (
-              <motion.div
-                key={test.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-lg">{test.title}</h3>
-                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-semibold">
-                    {test.duration} min
-                  </span>
-                </div>
-
-                {test.company && (
-                  <p className="text-sm text-gray-600 mb-2">🏢 {test.company}</p>
-                )}
-
-                <p className="text-sm text-gray-600 mb-4">
-                  📝 {(test.questions as Question[]).length} Questions
-                </p>
-
-                {attempt && (
-                  <div className={`${attempt.percentage >= 70 ? 'bg-green-50 border-green-200' : attempt.percentage >= 40 ? 'bg-yellow-50 border-yellow-200' : 'bg-red-50 border-red-200'} border rounded-lg p-3 mb-4`}>
-                    <p className="text-sm font-semibold">
-                      Previous Score: {attempt.percentage.toFixed(1)}%
-                    </p>
-                    {attempt.flagged && (
-                      <p className="text-xs text-red-600 mt-1">⚠️ Flagged for review</p>
-                    )}
-                  </div>
-                )}
-
-                <button
-                  onClick={() => startTest(test)}
-                  className="w-full bg-blue-600 text-white py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+              return (
+                <motion.div
+                  key={test.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
                 >
-                  {attempt ? 'Retake Test' : 'Start Test'}
-                </button>
-              </motion.div>
-            );
-          })}
-        </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-lg">{test.title}</h3>
+                    <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-semibold">
+                      {test.duration} min
+                    </span>
+                  </div>
+
+                  {test.company && (
+                    <p className="text-sm text-gray-600 mb-2">🏢 {test.company}</p>
+                  )}
+
+                  <p className="text-sm text-gray-600 mb-4">
+                    📝 {(test.questions as Question[]).length} Questions
+                  </p>
+
+                  {attempt && (
+                    <div className={`${attempt.percentage >= 70 ? 'bg-green-50 border-green-200' : attempt.percentage >= 40 ? 'bg-yellow-50 border-yellow-200' : 'bg-red-50 border-red-200'} border rounded-lg p-3 mb-4`}>
+                      <p className="text-sm font-semibold">
+                        Previous Score: {attempt.percentage.toFixed(1)}%
+                      </p>
+                      {attempt.flagged && (
+                        <p className="text-xs text-red-600 mt-1">⚠️ Flagged for review</p>
+                      )}
+                    </div>
+                  )}
+
+                  <button
+                    onClick={() => startTest(test)}
+                    className="w-full bg-blue-600 text-white py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+                  >
+                    {attempt ? 'Retake Test' : 'Start Test'}
+                  </button>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
 
         {attempts.length > 0 && (
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
@@ -1049,7 +1060,7 @@ export const MockTests = () => {
                     <th className="text-left py-3 px-4">Percentage</th>
                     <th className="text-left py-3 px-4">Violations</th>
                     <th className="text-left py-3 px-4">Date</th>
-                   </tr>
+                  </tr>
                 </thead>
                 <tbody>
                   {attempts.map((attempt) => {
@@ -1063,13 +1074,12 @@ export const MockTests = () => {
                         </td>
                         <td className="py-3 px-4">
                           <span
-                            className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                              attempt.percentage >= 70
+                            className={`px-3 py-1 rounded-full text-sm font-semibold ${attempt.percentage >= 70
                                 ? 'bg-green-100 text-green-700'
                                 : attempt.percentage >= 40
-                                ? 'bg-yellow-100 text-yellow-700'
-                                : 'bg-red-100 text-red-700'
-                            }`}
+                                  ? 'bg-yellow-100 text-yellow-700'
+                                  : 'bg-red-100 text-red-700'
+                              }`}
                           >
                             {attempt.percentage.toFixed(1)}%
                           </span>

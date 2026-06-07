@@ -111,24 +111,6 @@ export const ResumeBuilder = () => {
     }, 1500);
   };
 
-  const templates = [
-    {
-      name: 'Modern Professional',
-      preview: 'Clean and modern design with clear sections',
-      color: 'blue',
-    },
-    {
-      name: 'Tech Minimalist',
-      preview: 'Minimalist layout perfect for tech roles',
-      color: 'green',
-    },
-    {
-      name: 'Executive Classic',
-      preview: 'Traditional format for experienced professionals',
-      color: 'purple',
-    },
-  ];
-
   return (
     <div className="p-6">
       <div className="mb-6">
@@ -263,24 +245,6 @@ export const ResumeBuilder = () => {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-xl font-bold mb-4">Resume Templates</h2>
-            <div className="space-y-3">
-              {templates.map((template, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 cursor-pointer transition-all"
-                >
-                  <h3 className="font-semibold text-gray-900 mb-1">{template.name}</h3>
-                  <p className="text-sm text-gray-600 mb-3">{template.preview}</p>
-                  <button className="w-full bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-200">
-                    Use Template
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <h2 className="text-xl font-bold mb-4">Your Resumes</h2>
             <div className="space-y-3">
