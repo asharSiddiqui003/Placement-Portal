@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   User,
   Mail,
@@ -26,6 +26,7 @@ export const Profile = () => {
   const [showAddOffer, setShowAddOffer] = useState(false);
   const [newCompany, setNewCompany] = useState('');
   const [newOffer, setNewOffer] = useState('');
+  const [showSignOutConfirm, setShowSignOutConfirm] = useState(false);
 
   const [formData, setFormData] = useState({
     name: profile?.name || '',
@@ -433,7 +434,7 @@ export const Profile = () => {
               Account Settings
             </h3>
             <button
-              onClick={signOut}
+              onClick={() => setShowSignOutConfirm(true)}
               className="w-full bg-red-600 text-white py-2 rounded-lg font-medium hover:bg-red-700"
             >
               Sign Out
@@ -441,6 +442,41 @@ export const Profile = () => {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {showSignOutConfirm && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-gray-100"
+            >
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Sign Out</h3>
+              <p className="text-gray-600 mb-6 text-sm">
+                Are you sure you want to sign out of your account? Any unsaved changes will be lost.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowSignOutConfirm(false)}
+                  className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors font-medium text-gray-700 text-sm"
+                >
+                  No, Stay
+                </button>
+                <button
+                  onClick={async () => {
+                    setShowSignOutConfirm(false);
+                    await signOut();
+                  }}
+                  className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-colors text-sm"
+                >
+                  Yes, Sign Out
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
