@@ -5,9 +5,16 @@ A comprehensive full-stack web application for managing campus placement prepara
 ## Features
 
 ### For Students
-**Dashboard**: Overview of applications, offers, and upcoming interviews. **Mock Tests**: Timed assessments with auto-grading and detailed explanations. **Question Bank**: Searchable repository of interview questions from top companies. **Resume Builder**: Upload resumes and get instant ATS scoring with actionable feedback. **Analytics**: Visual insights into placement trends and personal performance. **Profile Management**: Track applications and manage personal information.
+
+**Dashboard**: Overview of applications, offers, and upcoming interviews. 
+**Mock Tests**: Timed assessments with auto-grading and detailed explanations. 
+**Question Bank**: Searchable repository of interview questions from top companies. 
+**Resume Builder**: Upload resumes and get instant ATS scoring with actionable feedback.
+**Analytics**: Visual insights into placement trends and personal performance.
+**Profile Management**: Track applications and manage personal information.
 
 ### Key Highlights
+
 Real-time authentication with Supabase Auth. Responsive design with mobile-first approach. Beautiful animations with Framer Motion. Interactive charts with Recharts. PostgreSQL database with Row Level Security. ATS resume scoring algorithm. Bookmark questions for later review. Performance tracking across multiple test attempts.
 
 ## Tech Stack
@@ -18,7 +25,13 @@ Real-time authentication with Supabase Auth. Responsive design with mobile-first
 ## Database Schema
 
 ### Tables
-`user_profiles` for student information and placement data. `mock_tests` for test templates with questions. `test_attempts` for user test submissions and scores. `question_bank` for interview questions database. `announcements` for placement notifications. `resumes` for resume uploads with ATS scores.
+
+`user_profiles` for student information and placement data. 
+`mock_tests` for test templates with questions. 
+`test_attempts` for user test submissions and scores. 
+`question_bank` for interview questions database. 
+`announcements` for placement notifications. 
+`resumes` for resume uploads with ATS scores.
 
 ## Getting Started
 
@@ -60,7 +73,14 @@ The application will be available at `http://localhost:5173`
 ## Usage
 
 ### For New Users
-**Register**: Create an account with your details (name, roll number, branch, year, CPI). **Explore Dashboard**: View your stats and upcoming opportunities. **Take Mock Tests**: Practice with company-specific and general aptitude tests. **Browse Questions**: Search and filter questions by company, topic, and difficulty. **Upload Resume**: Get instant ATS feedback and improvement suggestions. **Track Progress**: View analytics and performance trends. **Manage Profile**: Update information and track applications.
+
+**Register**: Create an account with your details (name, roll number, branch, year, CPI).
+**Explore Dashboard**: View your stats and upcoming opportunities.
+**Take Mock Tests**: Practice with company-specific and general aptitude tests.
+**Browse Questions**: Search and filter questions by company, topic, and difficulty.
+**Upload Resume**: Get instant ATS feedback and improvement suggestions.
+**Track Progress**: View analytics and performance trends.
+**Manage Profile**: Update information and track applications.
 
 ### Default Test Credentials (if seeded)
 None required - create your own account to get started!
