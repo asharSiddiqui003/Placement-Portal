@@ -12,11 +12,8 @@ Real-time authentication with Supabase Auth. Responsive design with mobile-first
 
 ## Tech Stack
 
-### Frontend
-**React 18** with TypeScript. **Tailwind CSS** for styling. **Framer Motion** for animations. **Recharts** for data visualization. **Lucide React** for icons. **Vite** as build tool.
-
-### Backend
-**Supabase** (PostgreSQL database). **Supabase Auth** for authentication. **Row Level Security** for data protection.
+**Frontend**: React v18, TypeScript, Tailwind CSS v3, Vite v6  
+**Backend**: Supabase (PostgreSQL, Auth)
 
 ## Database Schema
 
