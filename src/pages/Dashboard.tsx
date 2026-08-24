@@ -92,8 +92,9 @@ export const Dashboard = ({ onNavigate }: DashboardProps) => {
   };
 
   const modules = [
-    { name: 'DSA Practice', icon: Code, color: 'bg-blue-500', page: 'questions' },
-    { name: 'Aptitude Tests', icon: Brain, color: 'bg-green-500', page: 'mock-tests' },
+    { name: 'DSA Practice', icon: Code, color: 'bg-orange-500', page: 'dsa-hub' },
+    { name: 'Aptitude Tests', icon: Brain, color: 'bg-emerald-500', page: 'mock-tests' },
+    { name: 'Question Bank', icon: Network, color: 'bg-indigo-500', page: 'questions' },
   ];
 
   const handleNavigation = (page: string, params?: any) => {
@@ -103,95 +104,114 @@ export const Dashboard = ({ onNavigate }: DashboardProps) => {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-6">
+      {/* ── Welcome Header ──────────────────────────────────────────────── */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-6"
       >
-        <h1 className="text-3xl font-bold text-gray-900">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
           Welcome back, {profile?.name}!
         </h1>
-        <p className="text-gray-600 mt-2">Always stay updated in your placement portal</p>
+        <p className="text-gray-600 dark:text-zinc-400 text-sm sm:text-base mt-1.5">
+          Always stay updated in your placement portal
+        </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* ── Top Stats ────────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="bg-white dark:bg-zinc-900 rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100 dark:border-zinc-800 transition-colors"
+        >
+          <div className="flex items-center gap-4">
+            <div className="bg-orange-50 dark:bg-orange-950/50 p-3 rounded-xl">
+              <Briefcase className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+            </div>
+            <div>
+              <p className="text-gray-600 dark:text-zinc-400 text-xs sm:text-sm font-medium">
+                Companies Applied
+              </p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+                {stats.companiesApplied}
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          className="bg-white dark:bg-zinc-900 rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100 dark:border-zinc-800 transition-colors"
         >
           <div className="flex items-center gap-4">
-            <div className="bg-blue-100 p-3 rounded-xl">
-              <Briefcase className="w-6 h-6 text-blue-600" />
+            <div className="bg-emerald-50 dark:bg-emerald-950/50 p-3 rounded-xl">
+              <Award className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
             </div>
             <div>
-              <p className="text-gray-600 text-sm">Companies Applied</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.companiesApplied}</p>
+              <p className="text-gray-600 dark:text-zinc-400 text-xs sm:text-sm font-medium">
+                Offers Received
+              </p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+                {stats.offersReceived}
+              </p>
             </div>
           </div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          transition={{ delay: 0.15 }}
+          className="bg-white dark:bg-zinc-900 rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100 dark:border-zinc-800 transition-colors"
         >
           <div className="flex items-center gap-4">
-            <div className="bg-green-100 p-3 rounded-xl">
-              <Award className="w-6 h-6 text-green-600" />
+            <div className="bg-amber-50 dark:bg-amber-950/50 p-3 rounded-xl">
+              <Calendar className="w-6 h-6 text-amber-600 dark:text-amber-400" />
             </div>
             <div>
-              <p className="text-gray-600 text-sm">Offers Received</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.offersReceived}</p>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
-        >
-          <div className="flex items-center gap-4">
-            <div className="bg-orange-100 p-3 rounded-xl">
-              <Calendar className="w-6 h-6 text-orange-600" />
-            </div>
-            <div>
-              <p className="text-gray-600 text-sm">Upcoming Interviews</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.upcomingInterviews}</p>
+              <p className="text-gray-600 dark:text-zinc-400 text-xs sm:text-sm font-medium">
+                Upcoming Interviews
+              </p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+                {stats.upcomingInterviews}
+              </p>
             </div>
           </div>
         </motion.div>
       </div>
 
+      {/* ── Modules & Company Banks ───────────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}
-          className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          transition={{ delay: 0.2 }}
+          className="lg:col-span-2 bg-white dark:bg-zinc-900 rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100 dark:border-zinc-800 transition-colors"
         >
-          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-blue-600" />
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-orange-600 dark:text-orange-400" />
             Placement Prep Modules
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {modules.map((module, idx) => (
               <div
                 key={idx}
                 onClick={() => handleNavigation(module.page)}
-                className="group p-6 border border-gray-200 rounded-xl hover:shadow-lg transition-all cursor-pointer"
+                className="group p-5 border border-gray-200 dark:border-zinc-800 rounded-xl hover:shadow-md hover:border-orange-500/40 dark:hover:border-orange-500/40 hover:bg-gray-50 dark:hover:bg-zinc-800/40 transition-all cursor-pointer"
               >
-                <div className={`${module.color} w-12 h-12 rounded-lg flex items-center justify-center mb-3`}>
-                  <module.icon className="w-6 h-6 text-white" />
+                <div className={`${module.color} w-11 h-11 rounded-xl flex items-center justify-center mb-3 shadow-sm`}>
+                  <module.icon className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">{module.name}</h3>
-                <span className="text-blue-600 text-sm font-medium group-hover:underline">
-                  View →
+                <h3 className="font-semibold text-gray-900 dark:text-zinc-100 mb-1.5 text-sm sm:text-base">
+                  {module.name}
+                </h3>
+                <span className="text-orange-600 dark:text-orange-400 text-xs sm:text-sm font-medium group-hover:underline">
+                  Open Module →
                 </span>
               </div>
             ))}
@@ -199,24 +219,26 @@ export const Dashboard = ({ onNavigate }: DashboardProps) => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 16 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          transition={{ delay: 0.25 }}
+          className="bg-white dark:bg-zinc-900 rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100 dark:border-zinc-800 transition-colors"
         >
-          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-blue-600" />
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <Building2 className="w-5 h-5 text-orange-600 dark:text-orange-400" />
             Company Question Banks
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {companyQuestions.map((item, idx) => (
               <div
                 key={idx}
                 onClick={() => handleNavigation('questions', { company: item.company })}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                className="flex items-center justify-between p-3 bg-gray-50 dark:bg-zinc-800/50 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-xl transition-colors cursor-pointer"
               >
-                <span className="font-medium text-gray-900">{item.company}</span>
-                <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">
+                <span className="font-medium text-sm sm:text-base text-gray-900 dark:text-zinc-200">
+                  {item.company}
+                </span>
+                <span className="bg-orange-50 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800/40 text-orange-600 dark:text-orange-400 px-2.5 py-0.5 rounded-full text-xs font-semibold">
                   {item.count} Qs
                 </span>
               </div>
@@ -225,15 +247,16 @@ export const Dashboard = ({ onNavigate }: DashboardProps) => {
         </motion.div>
       </div>
 
+      {/* ── Announcements & Mock Tests ───────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          transition={{ delay: 0.3 }}
+          className="bg-white dark:bg-zinc-900 rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100 dark:border-zinc-800 transition-colors"
         >
-          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <Bell className="w-5 h-5 text-blue-600" />
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <Bell className="w-5 h-5 text-orange-600 dark:text-orange-400" />
             Daily Announcements
           </h2>
           <div className="space-y-3">
@@ -241,20 +264,24 @@ export const Dashboard = ({ onNavigate }: DashboardProps) => {
               announcements.map((announcement) => (
                 <div
                   key={announcement.id}
-                  className={`p-4 rounded-lg border-l-4 ${
+                  className={`p-4 rounded-xl border-l-4 ${
                     announcement.is_important
-                      ? 'bg-red-50 border-red-500'
-                      : 'bg-blue-50 border-blue-500'
+                      ? 'bg-red-50 dark:bg-red-950/30 border-red-500'
+                      : 'bg-orange-50 dark:bg-orange-950/20 border-orange-500'
                   }`}
                 >
-                  <h3 className="font-semibold text-gray-900">{announcement.title}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{announcement.content}</p>
+                  <h3 className="font-semibold text-gray-900 dark:text-zinc-100 text-sm sm:text-base">
+                    {announcement.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-zinc-400 mt-1">
+                    {announcement.content}
+                  </p>
                   {announcement.link && (
                     <a
                       href={announcement.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 text-sm mt-2 inline-block hover:underline"
+                      className="text-orange-600 dark:text-orange-400 text-xs sm:text-sm font-medium mt-2 inline-block hover:underline"
                     >
                       Learn more →
                     </a>
@@ -262,44 +289,55 @@ export const Dashboard = ({ onNavigate }: DashboardProps) => {
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 text-center py-8">No announcements yet</p>
+              <p className="text-gray-500 dark:text-zinc-500 text-center py-6 text-sm">
+                No announcements yet
+              </p>
             )}
           </div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          transition={{ delay: 0.35 }}
+          className="bg-white dark:bg-zinc-900 rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100 dark:border-zinc-800 transition-colors"
         >
-          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <Clock className="w-5 h-5 text-blue-600" />
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <Clock className="w-5 h-5 text-orange-600 dark:text-orange-400" />
             Upcoming Mock Tests
           </h2>
           <div className="space-y-3">
             {upcomingTests.length > 0 ? (
               upcomingTests.map((test) => (
-                <div key={test.id} className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg">
+                <div
+                  key={test.id}
+                  className="p-4 bg-gradient-to-r from-orange-50/50 to-amber-50/50 dark:from-zinc-800 dark:to-zinc-800/60 border border-orange-100/50 dark:border-zinc-700/50 rounded-xl"
+                >
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-semibold text-gray-900">{test.title}</h3>
-                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                    <h3 className="font-semibold text-gray-900 dark:text-zinc-100 text-sm sm:text-base">
+                      {test.title}
+                    </h3>
+                    <span className="bg-orange-600 text-white px-2.5 py-0.5 rounded-full text-xs font-semibold">
                       {test.duration} min
                     </span>
                   </div>
                   {test.company && (
-                    <p className="text-sm text-gray-600">Company: {test.company}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-zinc-400">
+                      Company: {test.company}
+                    </p>
                   )}
                   <button
                     onClick={() => handleNavigation('mock-tests', { testId: test.id })}
-                    className="inline-block mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                    className="inline-block mt-3 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-medium shadow-sm transition-colors"
                   >
                     Start Test
                   </button>
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 text-center py-8">No upcoming tests</p>
+              <p className="text-gray-500 dark:text-zinc-500 text-center py-6 text-sm">
+                No upcoming tests
+              </p>
             )}
           </div>
         </motion.div>

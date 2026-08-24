@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { Layout } from './components/Layout';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
@@ -10,7 +11,52 @@ import { ResumeBuilder } from './pages/ResumeBuilder';
 import { Analytics } from './pages/Analytics';
 import { Profile } from './pages/Profile';
 import { Landing } from './pages/Landing';
+import { DSAHub } from './pages/DSAHub';
 
+// ─── DEV BYPASS ───────────────────────────────────────────────────────────────
+// Set to true to skip Supabase auth and jump straight to the Dashboard.
+// ⚠️  REMEMBER to set back to false before committing / deploying!
+// ─────────────────────────────────────────────────────────────────────────────
+const DEV_BYPASS = true;
+
+const DEV_MOCK_PROFILE = {
+  id: 'dev-user-123',
+  email: 'dev@placementportal.com',
+  name: 'Dev User',
+  roll_number: 'DEV001',
+  branch: 'CSE',
+  year: 3,
+  cpi: 8.5,
+  applied_companies: ['Google', 'Amazon'],
+  offers: ['TCS'],
+  created_at: new Date().toISOString(),
+};
+
+// ─── Dev bypass component — full app, no auth wall ───────────────────────────
+function DevApp() {
+  const [currentPage, setCurrentPage] = useState('dashboard');
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'dashboard': return <Dashboard onNavigate={setCurrentPage} />;
+      case 'dsa-hub': return <DSAHub onNavigate={setCurrentPage} />;
+      case 'mock-tests': return <MockTests />;
+      case 'questions': return <QuestionBank />;
+      case 'resume': return <ResumeBuilder />;
+      case 'analytics': return <Analytics />;
+      case 'profile': return <Profile />;
+      default: return <Dashboard onNavigate={setCurrentPage} />;
+    }
+  };
+
+  return (
+    <Layout currentPage={currentPage} onNavigate={setCurrentPage}>
+      {renderPage()}
+    </Layout>
+  );
+}
+
+// ─── Real app — requires Supabase auth ───────────────────────────────────────
 function AppContent() {
   const { user, loading } = useAuth();
   const [showLanding, setShowLanding] = useState(true);
@@ -58,20 +104,14 @@ function AppContent() {
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'dashboard':
-        return <Dashboard onNavigate={setCurrentPage} />;
-      case 'mock-tests':
-        return <MockTests />;
-      case 'questions':
-        return <QuestionBank />;
-      case 'resume':
-        return <ResumeBuilder />;
-      case 'analytics':
-        return <Analytics />;
-      case 'profile':
-        return <Profile />;
-      default:
-        return <Dashboard onNavigate={setCurrentPage} />;
+      case 'dashboard': return <Dashboard onNavigate={setCurrentPage} />;
+      case 'dsa-hub': return <DSAHub onNavigate={setCurrentPage} />;
+      case 'mock-tests': return <MockTests />;
+      case 'questions': return <QuestionBank />;
+      case 'resume': return <ResumeBuilder />;
+      case 'analytics': return <Analytics />;
+      case 'profile': return <Profile />;
+      default: return <Dashboard onNavigate={setCurrentPage} />;
     }
   };
 
@@ -82,11 +122,20 @@ function AppContent() {
   );
 }
 
+// ─── Root ─────────────────────────────────────────────────────────────────────
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ThemeProvider>
+      {DEV_BYPASS ? (
+        <AuthProvider>
+          <DevApp />
+        </AuthProvider>
+      ) : (
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+      )}
+    </ThemeProvider>
   );
 }
 

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Global base font size ──────────────────────────────────────────────────
+   Tailwind defaults to 16px. Bumping to 17px scales all rem-based text
+   (text-sm, text-base, text-lg, etc.) proportionally across the whole site.
+   Increase further (18px) if you want it even larger.
+────────────────────────────────────────────────────────────────────────── */
+html {
+  font-size: 17px;
+}
+
 
 /* Prevent text selection during test */
 .proctoring-active {
