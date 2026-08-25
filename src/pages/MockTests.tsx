@@ -734,43 +734,44 @@ export const MockTests = () => {
         />
 
         <div className="p-6 max-w-5xl mx-auto pb-24">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
             <div className="mb-6">
               <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
-                <h2 className="text-2xl font-bold">{selectedTest.title}</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-zinc-100">{selectedTest.title}</h2>
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2 bg-red-50 px-4 py-2 rounded-lg">
-                    <Clock className="w-5 h-5 text-red-600" />
-                    <span className={`font-bold ${timeLeft < 60 ? 'text-red-600 animate-pulse' : 'text-red-600'}`}>
+                  <div className="flex items-center gap-2 bg-red-50 dark:bg-red-900/20 px-4 py-2 rounded-lg">
+                    <Clock className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    <span className={`font-bold ${timeLeft < 60 ? 'text-red-600 dark:text-red-400 animate-pulse' : 'text-red-600 dark:text-red-400'}`}>
                       {formatTime(timeLeft)}
                     </span>
                   </div>
-                  <div className="bg-gray-100 px-4 py-2 rounded-lg">
-                    <span className="text-gray-600 font-medium">
+                  <div className="bg-gray-100 dark:bg-zinc-800 px-4 py-2 rounded-lg">
+                    <span className="text-gray-600 dark:text-zinc-400 font-medium">
                       Q{currentQuestion + 1}/{questions.length}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-2">
                 <div
-                  className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  className="bg-orange-500 h-2 rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}
                 />
               </div>
             </div>
 
             <div className="mb-6">
-              <h3 className="text-xl font-semibold mb-6">{question.question}</h3>
+              <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-zinc-100">{question.question}</h3>
               <div className="space-y-3">
                 {question.options.map((option, idx) => (
                   <label
                     key={idx}
-                    className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${answers[question.id] === idx
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/30'
-                      }`}
+                    className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                      answers[question.id] === idx
+                        ? 'border-orange-500 bg-orange-50 dark:bg-orange-900/20'
+                        : 'border-gray-200 dark:border-zinc-700 hover:border-orange-300 dark:hover:border-orange-700 hover:bg-orange-50/30 dark:hover:bg-orange-900/10'
+                    }`}
                   >
                     <input
                       type="radio"
@@ -780,7 +781,7 @@ export const MockTests = () => {
                       className="mr-3 w-4 h-4"
                       disabled={testCompleted}
                     />
-                    <span className="text-gray-800">{option}</span>
+                    <span className="text-gray-800 dark:text-zinc-200">{option}</span>
                   </label>
                 ))}
               </div>
@@ -790,7 +791,7 @@ export const MockTests = () => {
               <button
                 onClick={() => setCurrentQuestion((prev) => Math.max(0, prev - 1))}
                 disabled={currentQuestion === 0}
-                className="flex items-center gap-2 px-5 py-2.5 bg-gray-100 rounded-xl disabled:opacity-50 hover:bg-gray-200 transition-colors font-medium"
+                className="flex items-center gap-2 px-5 py-2.5 bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-zinc-300 rounded-xl disabled:opacity-50 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors font-medium"
               >
                 <ChevronLeft className="w-5 h-5" />
                 Previous
@@ -807,7 +808,7 @@ export const MockTests = () => {
               ) : (
                 <button
                   onClick={() => setCurrentQuestion((prev) => Math.min(questions.length - 1, prev + 1))}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-orange-600 text-white rounded-xl font-semibold hover:bg-orange-700 transition-colors"
                 >
                   Next
                   <ChevronRight className="w-5 h-5" />
@@ -815,35 +816,36 @@ export const MockTests = () => {
               )}
             </div>
 
-            <div className="pt-4 border-t">
-              <p className="text-sm text-gray-600 mb-3 font-medium">Question Navigator:</p>
+            <div className="pt-4 border-t dark:border-zinc-700">
+              <p className="text-sm text-gray-600 dark:text-zinc-400 mb-3 font-medium">Question Navigator:</p>
               <div className="flex gap-2 flex-wrap">
                 {questions.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentQuestion(idx)}
-                    className={`w-10 h-10 rounded-xl font-semibold transition-all ${currentQuestion === idx
-                        ? 'bg-blue-600 text-white shadow-md'
+                    className={`w-10 h-10 rounded-xl font-semibold transition-all ${
+                      currentQuestion === idx
+                        ? 'bg-orange-600 text-white shadow-md'
                         : answers[questions[idx].id] !== undefined
-                          ? 'bg-green-100 text-green-700 border border-green-300'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
+                          ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 border border-green-300 dark:border-green-700'
+                          : 'bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-zinc-300 hover:bg-gray-200 dark:hover:bg-zinc-700'
+                    }`}
                   >
                     {idx + 1}
                   </button>
                 ))}
               </div>
-              <div className="flex gap-4 mt-4 text-sm">
+              <div className="flex gap-4 mt-4 text-sm text-gray-700 dark:text-zinc-300">
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-green-100 border border-green-300 rounded" />
+                  <div className="w-4 h-4 bg-green-100 dark:bg-green-900/40 border border-green-300 dark:border-green-700 rounded" />
                   <span>Answered</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-gray-100 rounded" />
+                  <div className="w-4 h-4 bg-gray-100 dark:bg-zinc-800 rounded" />
                   <span>Not Answered</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-blue-600 rounded" />
+                  <div className="w-4 h-4 bg-orange-600 rounded" />
                   <span>Current</span>
                 </div>
               </div>
@@ -859,45 +861,61 @@ export const MockTests = () => {
     const questions = selectedTest.questions as Question[];
 
     return (
-      <div className="p-6 max-w-4xl mx-auto">
+      <div className="p-6 max-w-4xl mx-auto min-h-screen bg-gray-50 dark:bg-zinc-950">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100"
+          className="bg-white dark:bg-zinc-900 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-zinc-800"
         >
           <div className="text-center">
-            <div className={`${score.percentage >= 70 ? 'bg-green-100' : score.percentage >= 40 ? 'bg-yellow-100' : 'bg-red-100'} w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4`}>
-              <Trophy className={`w-12 h-12 ${score.percentage >= 70 ? 'text-green-600' : score.percentage >= 40 ? 'text-yellow-600' : 'text-red-600'}`} />
+            <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4 ${
+              score.percentage >= 70 ? 'bg-green-100 dark:bg-green-900/30' :
+              score.percentage >= 40 ? 'bg-yellow-100 dark:bg-yellow-900/30' :
+              'bg-red-100 dark:bg-red-900/30'
+            }`}>
+              <Trophy className={`w-12 h-12 ${
+                score.percentage >= 70 ? 'text-green-600 dark:text-green-400' :
+                score.percentage >= 40 ? 'text-yellow-600 dark:text-yellow-400' :
+                'text-red-600 dark:text-red-400'
+              }`} />
             </div>
-            <h2 className="text-3xl font-bold mb-2">Test Completed!</h2>
-            <p className="text-gray-600 mb-6">Here are your results for {selectedTest.title}</p>
+            <h2 className="text-3xl font-bold mb-2 text-gray-900 dark:text-zinc-100">Test Completed!</h2>
+            <p className="text-gray-600 dark:text-zinc-400 mb-6">Here are your results for {selectedTest.title}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600">Score</p>
-                <p className="text-2xl font-bold text-blue-600">
+              <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg">
+                <p className="text-sm text-gray-600 dark:text-zinc-400">Score</p>
+                <p className="text-2xl font-bold text-orange-600 dark:text-orange-400">
                   {score.score}/{score.total}
                 </p>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600">Percentage</p>
-                <p className="text-2xl font-bold text-green-600">{score.percentage.toFixed(1)}%</p>
+              <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+                <p className="text-sm text-gray-600 dark:text-zinc-400">Percentage</p>
+                <p className="text-2xl font-bold text-green-600 dark:text-green-400">{score.percentage.toFixed(1)}%</p>
               </div>
-              <div className="bg-purple-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600">Correct Answers</p>
-                <p className="text-2xl font-bold text-purple-600">{score.score}</p>
+              <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
+                <p className="text-sm text-gray-600 dark:text-zinc-400">Correct Answers</p>
+                <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{score.score}</p>
               </div>
-              <div className={`${proctoringState.violationCount > 0 ? 'bg-red-50' : 'bg-gray-50'} p-4 rounded-lg`}>
-                <p className="text-sm text-gray-600">Violations</p>
-                <p className={`text-2xl font-bold ${proctoringState.violationCount > 0 ? 'text-red-600' : 'text-green-600'}`}>
+              <div className={`p-4 rounded-lg ${
+                proctoringState.violationCount > 0
+                  ? 'bg-red-50 dark:bg-red-900/20'
+                  : 'bg-gray-50 dark:bg-zinc-800'
+              }`}>
+                <p className="text-sm text-gray-600 dark:text-zinc-400">Violations</p>
+                <p className={`text-2xl font-bold ${
+                  proctoringState.violationCount > 0
+                    ? 'text-red-600 dark:text-red-400'
+                    : 'text-green-600 dark:text-green-400'
+                }`}>
                   {proctoringState.violationCount}
                 </p>
               </div>
             </div>
 
             {proctoringState.violationCount > 0 && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-                <p className="text-sm text-yellow-800">
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800/50 rounded-lg p-4 mb-6">
+                <p className="text-sm text-yellow-800 dark:text-yellow-300">
                   ⚠️ Note: {proctoringState.violationCount} violation(s) were recorded during this test.
                   Your results may be under review.
                 </p>
@@ -905,28 +923,32 @@ export const MockTests = () => {
             )}
 
             <div className="text-left space-y-4 mb-6 max-h-96 overflow-y-auto">
-              <h3 className="font-bold text-lg">Answer Review</h3>
+              <h3 className="font-bold text-lg text-gray-900 dark:text-zinc-100">Answer Review</h3>
               {questions.map((q, idx) => {
                 const userAnswer = answers[q.id];
                 const isCorrect = userAnswer === q.correctAnswer;
 
                 return (
-                  <div key={q.id} className={`border rounded-lg p-4 ${isCorrect ? 'border-green-200 bg-green-50/30' : 'border-red-200 bg-red-50/30'}`}>
+                  <div key={q.id} className={`border rounded-lg p-4 ${
+                    isCorrect
+                      ? 'border-green-200 dark:border-green-800/50 bg-green-50/30 dark:bg-green-900/10'
+                      : 'border-red-200 dark:border-red-800/50 bg-red-50/30 dark:bg-red-900/10'
+                  }`}>
                     <div className="flex items-start gap-3">
                       {isCorrect ? (
-                        <CheckCircle className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
                       ) : (
-                        <XCircle className="w-5 h-5 text-red-600 mt-1 flex-shrink-0" />
+                        <XCircle className="w-5 h-5 text-red-600 dark:text-red-400 mt-1 flex-shrink-0" />
                       )}
                       <div className="flex-1">
-                        <p className="font-medium mb-2">
+                        <p className="font-medium mb-2 text-gray-900 dark:text-zinc-100">
                           Q{idx + 1}: {q.question}
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-600 dark:text-zinc-400">
                           Your answer: {userAnswer !== undefined ? q.options[userAnswer] : 'Not answered'}
                         </p>
                         {!isCorrect && (
-                          <p className="text-sm text-green-600 font-medium mt-1">
+                          <p className="text-sm text-green-600 dark:text-green-400 font-medium mt-1">
                             Correct answer: {q.options[q.correctAnswer]}
                           </p>
                         )}
@@ -943,7 +965,7 @@ export const MockTests = () => {
                 setTestCompleted(false);
                 setProctoringReady(false);
               }}
-              className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+              className="px-6 py-3 bg-orange-600 text-white rounded-xl font-semibold hover:bg-orange-700 transition-colors"
             >
               Back to Tests
             </button>
@@ -964,11 +986,11 @@ export const MockTests = () => {
         />
       )}
 
-      <div className="p-6">
+      <div className="p-6 min-h-screen bg-gray-50 dark:bg-zinc-950 transition-colors">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Mock Tests</h1>
-          <p className="text-gray-600">Practice with company-specific and general aptitude tests</p>
-          <div className="mt-2 bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-800">
+          <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-zinc-100">Mock Tests</h1>
+          <p className="text-gray-600 dark:text-zinc-400">Practice with company-specific and general aptitude tests</p>
+          <div className="mt-2 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/50 rounded-lg p-3 text-sm text-orange-800 dark:text-orange-300">
             <strong>📋 Test Guidelines:</strong> Camera access required. Fullscreen mode enforced.
             Tab switching and copy/paste are prohibited. Maximum 3 violations allowed.
           </div>
@@ -976,11 +998,11 @@ export const MockTests = () => {
 
         <div className="mb-6 flex gap-4">
           <div className="flex items-center gap-2">
-            <Filter className="w-5 h-5 text-gray-600" />
+            <Filter className="w-5 h-5 text-gray-600 dark:text-zinc-400" />
             <select
               value={filterCompany}
               onChange={(e) => setFilterCompany(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-4 py-2 border border-gray-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:ring-2 focus:ring-orange-500 outline-none"
             >
               <option value="all">All Companies</option>
               <option value="Amazon">Amazon</option>
@@ -993,10 +1015,10 @@ export const MockTests = () => {
         </div>
 
         {filteredTests.length === 0 ? (
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center mb-8">
-            <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-            <h3 className="font-bold text-lg text-gray-800">No Tests Found</h3>
-            <p className="text-gray-600 mt-1">There are no mock tests matching this filter, or the database needs to be seeded.</p>
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-zinc-800 text-center mb-8">
+            <AlertCircle className="w-12 h-12 text-gray-400 dark:text-zinc-500 mx-auto mb-3" />
+            <h3 className="font-bold text-lg text-gray-800 dark:text-zinc-200">No Tests Found</h3>
+            <p className="text-gray-600 dark:text-zinc-400 mt-1">There are no mock tests matching this filter, or the database needs to be seeded.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -1008,37 +1030,43 @@ export const MockTests = () => {
                   key={test.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+                  className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800 hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-bold text-lg">{test.title}</h3>
-                    <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-semibold">
+                    <h3 className="font-bold text-lg text-gray-900 dark:text-zinc-100">{test.title}</h3>
+                    <span className="bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 px-3 py-1 rounded-full text-xs font-semibold">
                       {test.duration} min
                     </span>
                   </div>
 
                   {test.company && (
-                    <p className="text-sm text-gray-600 mb-2">🏢 {test.company}</p>
+                    <p className="text-sm text-gray-600 dark:text-zinc-400 mb-2">🏢 {test.company}</p>
                   )}
 
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-sm text-gray-600 dark:text-zinc-400 mb-4">
                     📝 {(test.questions as Question[]).length} Questions
                   </p>
 
                   {attempt && (
-                    <div className={`${attempt.percentage >= 70 ? 'bg-green-50 border-green-200' : attempt.percentage >= 40 ? 'bg-yellow-50 border-yellow-200' : 'bg-red-50 border-red-200'} border rounded-lg p-3 mb-4`}>
-                      <p className="text-sm font-semibold">
+                    <div className={`border rounded-lg p-3 mb-4 ${
+                      attempt.percentage >= 70
+                        ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800/50'
+                        : attempt.percentage >= 40
+                          ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800/50'
+                          : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800/50'
+                    }`}>
+                      <p className="text-sm font-semibold text-gray-800 dark:text-zinc-200">
                         Previous Score: {attempt.percentage.toFixed(1)}%
                       </p>
                       {attempt.flagged && (
-                        <p className="text-xs text-red-600 mt-1">⚠️ Flagged for review</p>
+                        <p className="text-xs text-red-600 dark:text-red-400 mt-1">⚠️ Flagged for review</p>
                       )}
                     </div>
                   )}
 
                   <button
                     onClick={() => startTest(test)}
-                    className="w-full bg-blue-600 text-white py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+                    className="w-full bg-orange-600 text-white py-2.5 rounded-xl font-semibold hover:bg-orange-700 transition-colors"
                   >
                     {attempt ? 'Retake Test' : 'Start Test'}
                   </button>
@@ -1049,17 +1077,17 @@ export const MockTests = () => {
         )}
 
         {attempts.length > 0 && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h2 className="text-xl font-bold mb-4">📊 Your Past Attempts</h2>
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800">
+            <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-zinc-100">📊 Your Past Attempts</h2>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-3 px-4">Test</th>
-                    <th className="text-left py-3 px-4">Score</th>
-                    <th className="text-left py-3 px-4">Percentage</th>
-                    <th className="text-left py-3 px-4">Violations</th>
-                    <th className="text-left py-3 px-4">Date</th>
+                  <tr className="border-b dark:border-zinc-700">
+                    <th className="text-left py-3 px-4 text-gray-700 dark:text-zinc-300">Test</th>
+                    <th className="text-left py-3 px-4 text-gray-700 dark:text-zinc-300">Score</th>
+                    <th className="text-left py-3 px-4 text-gray-700 dark:text-zinc-300">Percentage</th>
+                    <th className="text-left py-3 px-4 text-gray-700 dark:text-zinc-300">Violations</th>
+                    <th className="text-left py-3 px-4 text-gray-700 dark:text-zinc-300">Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1067,29 +1095,34 @@ export const MockTests = () => {
                     const test = tests.find((t) => t.id === attempt.test_id);
                     const violationCount = getViolationCount(attempt);
                     return (
-                      <tr key={attempt.id} className="border-b hover:bg-gray-50">
-                        <td className="py-3 px-4 font-medium">{test?.title || 'Unknown'}</td>
-                        <td className="py-3 px-4">
+                      <tr key={attempt.id} className="border-b dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-800/50">
+                        <td className="py-3 px-4 font-medium text-gray-900 dark:text-zinc-100">{test?.title || 'Unknown'}</td>
+                        <td className="py-3 px-4 text-gray-700 dark:text-zinc-300">
                           {attempt.score}/{attempt.total}
                         </td>
                         <td className="py-3 px-4">
                           <span
-                            className={`px-3 py-1 rounded-full text-sm font-semibold ${attempt.percentage >= 70
-                                ? 'bg-green-100 text-green-700'
+                            className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                              attempt.percentage >= 70
+                                ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400'
                                 : attempt.percentage >= 40
-                                  ? 'bg-yellow-100 text-yellow-700'
-                                  : 'bg-red-100 text-red-700'
-                              }`}
+                                  ? 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-400'
+                                  : 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400'
+                            }`}
                           >
                             {attempt.percentage.toFixed(1)}%
                           </span>
                         </td>
                         <td className="py-3 px-4">
-                          <span className={`${violationCount > 0 ? 'text-red-600 font-semibold' : 'text-green-600'}`}>
+                          <span className={`${
+                            violationCount > 0
+                              ? 'text-red-600 dark:text-red-400 font-semibold'
+                              : 'text-green-600 dark:text-green-400'
+                          }`}>
                             {violationCount}
                           </span>
                         </td>
-                        <td className="py-3 px-4 text-gray-600">
+                        <td className="py-3 px-4 text-gray-600 dark:text-zinc-400">
                           {new Date(attempt.completed_at).toLocaleDateString()}
                         </td>
                       </tr>

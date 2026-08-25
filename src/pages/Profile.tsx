@@ -92,28 +92,33 @@ export const Profile = () => {
     await updateProfile({ offers: updatedOffers });
   };
 
+  // Shared input/select styles
+  const inputClass = 'w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-600 outline-none transition-colors disabled:bg-gray-50 disabled:dark:bg-zinc-900';
+  const labelClass = 'block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-2';
+  const cardClass = 'bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800';
+
   if (!profile) {
     return (
-      <div className="p-6">
+      <div className="p-6 min-h-screen bg-gray-50 dark:bg-zinc-950">
         <div className="text-center py-12">
-          <p className="text-gray-600">Loading profile...</p>
+          <p className="text-gray-600 dark:text-zinc-400">Loading profile...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6">
+    <div className="p-6 min-h-screen bg-gray-50 dark:bg-zinc-950 transition-colors">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">Profile</h1>
-        <p className="text-gray-600">Manage your personal information and applications</p>
+        <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-zinc-100">Profile</h1>
+        <p className="text-gray-600 dark:text-zinc-400">Manage your personal information and applications</p>
       </div>
 
       {success && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6"
+          className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800/50 text-green-700 dark:text-green-400 px-4 py-3 rounded-lg mb-6"
         >
           {success}
         </motion.div>
@@ -123,21 +128,23 @@ export const Profile = () => {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6"
+          className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6"
         >
           {error}
         </motion.div>
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* ── Left column ───────────────────────────────────────────────────── */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          {/* Personal info */}
+          <div className={cardClass}>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold">Personal Information</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-zinc-100">Personal Information</h2>
               {!editing ? (
                 <button
                   onClick={() => setEditing(true)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700"
+                  className="px-4 py-2 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors"
                 >
                   Edit Profile
                 </button>
@@ -153,14 +160,14 @@ export const Profile = () => {
                         cpi: profile.cpi || 0,
                       });
                     }}
-                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300"
+                    className="px-4 py-2 bg-gray-200 dark:bg-zinc-700 text-gray-700 dark:text-zinc-300 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-zinc-600 transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleSave}
                     disabled={saving}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 flex items-center gap-2 disabled:opacity-50"
+                    className="px-4 py-2 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 flex items-center gap-2 disabled:opacity-50 transition-colors"
                   >
                     <Save className="w-4 h-4" />
                     {saving ? 'Saving...' : 'Save'}
@@ -171,58 +178,54 @@ export const Profile = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name
-                </label>
+                <label className={labelClass}>Full Name</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-zinc-500 w-5 h-5" />
                   <input
                     type="text"
                     value={editing ? formData.name : profile.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     disabled={!editing}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                    className={inputClass}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <label className={labelClass}>Email</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-zinc-500 w-5 h-5" />
                   <input
                     type="email"
                     value={profile.email}
                     disabled
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
+                    className={inputClass}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Roll Number
-                </label>
+                <label className={labelClass}>Roll Number</label>
                 <div className="relative">
-                  <Hash className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Hash className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-zinc-500 w-5 h-5" />
                   <input
                     type="text"
                     value={profile.roll_number}
                     disabled
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
+                    className={inputClass}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Branch</label>
+                <label className={labelClass}>Branch</label>
                 <div className="relative">
-                  <BookOpen className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <BookOpen className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-zinc-500 w-5 h-5" />
                   <select
                     value={editing ? formData.branch : profile.branch}
                     onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
                     disabled={!editing}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50 appearance-none"
+                    className={`${inputClass} appearance-none`}
                   >
                     <option value="CSE">CSE</option>
                     <option value="ECE">ECE</option>
@@ -234,14 +237,14 @@ export const Profile = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Year</label>
+                <label className={labelClass}>Year</label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-zinc-500 w-5 h-5" />
                   <select
                     value={editing ? formData.year : profile.year}
                     onChange={(e) => setFormData({ ...formData, year: parseInt(e.target.value) })}
                     disabled={!editing}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50 appearance-none"
+                    className={`${inputClass} appearance-none`}
                   >
                     <option value={1}>1st Year</option>
                     <option value={2}>2nd Year</option>
@@ -252,9 +255,9 @@ export const Profile = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">CPI</label>
+                <label className={labelClass}>CPI</label>
                 <div className="relative">
-                  <GraduationCap className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <GraduationCap className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-zinc-500 w-5 h-5" />
                   <input
                     type="number"
                     value={editing ? formData.cpi : profile.cpi || 0}
@@ -263,22 +266,23 @@ export const Profile = () => {
                     step="0.01"
                     min="0"
                     max="10"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50"
+                    className={inputClass}
                   />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          {/* Companies Applied */}
+          <div className={cardClass}>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold flex items-center gap-2">
+              <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900 dark:text-zinc-100">
                 <Briefcase className="w-5 h-5" />
                 Companies Applied
               </h2>
               <button
                 onClick={() => setShowAddCompany(true)}
-                className="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 flex items-center gap-2"
+                className="px-3 py-2 bg-orange-600 text-white rounded-lg text-sm font-medium hover:bg-orange-700 flex items-center gap-2 transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Add Company
@@ -292,20 +296,17 @@ export const Profile = () => {
                   value={newCompany}
                   onChange={(e) => setNewCompany(e.target.value)}
                   placeholder="Company name"
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:ring-2 focus:ring-orange-500 outline-none"
                 />
                 <button
                   onClick={handleAddCompany}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
                 >
                   Add
                 </button>
                 <button
-                  onClick={() => {
-                    setShowAddCompany(false);
-                    setNewCompany('');
-                  }}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300"
+                  onClick={() => { setShowAddCompany(false); setNewCompany(''); }}
+                  className="px-4 py-2 bg-gray-200 dark:bg-zinc-700 text-gray-700 dark:text-zinc-300 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-zinc-600 transition-colors"
                 >
                   Cancel
                 </button>
@@ -317,32 +318,33 @@ export const Profile = () => {
                 profile.applied_companies.map((company, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between p-3 bg-blue-50 rounded-lg"
+                    className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-900/20 border border-orange-100 dark:border-orange-800/30 rounded-lg"
                   >
-                    <span className="font-medium">{company}</span>
+                    <span className="font-medium text-gray-900 dark:text-zinc-100">{company}</span>
                     <button
                       onClick={() => handleRemoveCompany(company)}
-                      className="text-red-600 hover:text-red-700"
+                      className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
                     >
                       <X className="w-5 h-5" />
                     </button>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500 text-center py-4">No companies added yet</p>
+                <p className="text-gray-500 dark:text-zinc-500 text-center py-4">No companies added yet</p>
               )}
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          {/* Offers */}
+          <div className={cardClass}>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold flex items-center gap-2">
+              <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900 dark:text-zinc-100">
                 <Award className="w-5 h-5" />
                 Offers Received
               </h2>
               <button
                 onClick={() => setShowAddOffer(true)}
-                className="px-3 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 flex items-center gap-2"
+                className="px-3 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 flex items-center gap-2 transition-colors"
               >
                 <Plus className="w-4 h-4" />
                 Add Offer
@@ -356,20 +358,17 @@ export const Profile = () => {
                   value={newOffer}
                   onChange={(e) => setNewOffer(e.target.value)}
                   placeholder="Company name"
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:ring-2 focus:ring-orange-500 outline-none"
                 />
                 <button
                   onClick={handleAddOffer}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
                 >
                   Add
                 </button>
                 <button
-                  onClick={() => {
-                    setShowAddOffer(false);
-                    setNewOffer('');
-                  }}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300"
+                  onClick={() => { setShowAddOffer(false); setNewOffer(''); }}
+                  className="px-4 py-2 bg-gray-200 dark:bg-zinc-700 text-gray-700 dark:text-zinc-300 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-zinc-600 transition-colors"
                 >
                   Cancel
                 </button>
@@ -381,61 +380,59 @@ export const Profile = () => {
                 profile.offers.map((offer, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between p-3 bg-green-50 rounded-lg"
+                    className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800/30 rounded-lg"
                   >
-                    <span className="font-medium">{offer}</span>
+                    <span className="font-medium text-gray-900 dark:text-zinc-100">{offer}</span>
                     <button
                       onClick={() => handleRemoveOffer(offer)}
-                      className="text-red-600 hover:text-red-700"
+                      className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
                     >
                       <X className="w-5 h-5" />
                     </button>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500 text-center py-4">No offers yet</p>
+                <p className="text-gray-500 dark:text-zinc-500 text-center py-4">No offers yet</p>
               )}
             </div>
           </div>
         </div>
 
+        {/* ── Right column ──────────────────────────────────────────────────── */}
         <div className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          {/* Avatar card */}
+          <div className={cardClass}>
             <div className="flex items-center justify-center mb-6">
-              <div className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center">
-                <User className="w-12 h-12 text-blue-600" />
+              <div className="w-24 h-24 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
+                <User className="w-12 h-12 text-orange-600 dark:text-orange-400" />
               </div>
             </div>
-            <h3 className="text-center font-bold text-xl mb-1">{profile.name}</h3>
-            <p className="text-center text-gray-600 mb-4">{profile.email}</p>
+            <h3 className="text-center font-bold text-xl mb-1 text-gray-900 dark:text-zinc-100">{profile.name}</h3>
+            <p className="text-center text-gray-600 dark:text-zinc-400 mb-4">{profile.email}</p>
             <div className="space-y-2">
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-sm text-gray-600">Roll Number</span>
-                <span className="font-semibold">{profile.roll_number}</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-sm text-gray-600">Branch</span>
-                <span className="font-semibold">{profile.branch}</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-sm text-gray-600">Year</span>
-                <span className="font-semibold">{profile.year}</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-sm text-gray-600">CPI</span>
-                <span className="font-semibold">{profile.cpi?.toFixed(2) || 'N/A'}</span>
-              </div>
+              {[
+                { label: 'Roll Number', value: profile.roll_number },
+                { label: 'Branch', value: profile.branch },
+                { label: 'Year', value: profile.year },
+                { label: 'CPI', value: profile.cpi?.toFixed(2) || 'N/A' },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-zinc-800 rounded-lg">
+                  <span className="text-sm text-gray-600 dark:text-zinc-400">{item.label}</span>
+                  <span className="font-semibold text-gray-900 dark:text-zinc-100">{item.value}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h3 className="font-bold mb-4 flex items-center gap-2">
+          {/* Account settings */}
+          <div className={cardClass}>
+            <h3 className="font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-zinc-100">
               <Lock className="w-5 h-5" />
               Account Settings
             </h3>
             <button
               onClick={() => setShowSignOutConfirm(true)}
-              className="w-full bg-red-600 text-white py-2 rounded-lg font-medium hover:bg-red-700"
+              className="w-full bg-red-600 text-white py-2 rounded-lg font-medium hover:bg-red-700 transition-colors"
             >
               Sign Out
             </button>
@@ -443,6 +440,7 @@ export const Profile = () => {
         </div>
       </div>
 
+      {/* Sign-out confirm modal */}
       <AnimatePresence>
         {showSignOutConfirm && (
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -450,16 +448,16 @@ export const Profile = () => {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-gray-100"
+              className="bg-white dark:bg-zinc-900 rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-gray-100 dark:border-zinc-700"
             >
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Sign Out</h3>
-              <p className="text-gray-600 mb-6 text-sm">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-100 mb-2">Sign Out</h3>
+              <p className="text-gray-600 dark:text-zinc-400 mb-6 text-sm">
                 Are you sure you want to sign out of your account? Any unsaved changes will be lost.
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowSignOutConfirm(false)}
-                  className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors font-medium text-gray-700 text-sm"
+                  className="flex-1 px-4 py-2.5 border border-gray-200 dark:border-zinc-700 rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors font-medium text-gray-700 dark:text-zinc-300 text-sm"
                 >
                   No, Stay
                 </button>

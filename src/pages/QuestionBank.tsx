@@ -89,38 +89,42 @@ export const QuestionBank = () => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'Easy':
-        return 'bg-green-100 text-green-700';
+        return 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400';
       case 'Medium':
-        return 'bg-yellow-100 text-yellow-700';
+        return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400';
       case 'Hard':
-        return 'bg-red-100 text-red-700';
+        return 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'bg-gray-100 text-gray-700 dark:bg-zinc-700 dark:text-zinc-300';
     }
   };
 
+  const selectClass = 'w-full px-4 py-2 border border-gray-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-100 focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-600 outline-none transition-colors';
+  const labelClass = 'block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-2';
+
   return (
-    <div className="p-6">
+    <div className="p-6 min-h-screen bg-gray-50 dark:bg-zinc-950 transition-colors">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">Question Bank</h1>
-        <p className="text-gray-600">
+        <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-zinc-100">Question Bank</h1>
+        <p className="text-gray-600 dark:text-zinc-400">
           Explore {questions.length} questions from top companies
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
+      {/* Filters */}
+      <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800 mb-6">
         <div className="flex items-center gap-2 mb-4">
-          <Filter className="w-5 h-5 text-gray-600" />
-          <h2 className="font-semibold">Filters</h2>
+          <Filter className="w-5 h-5 text-gray-600 dark:text-zinc-400" />
+          <h2 className="font-semibold text-gray-900 dark:text-zinc-100">Filters</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Company</label>
+            <label className={labelClass}>Company</label>
             <select
               value={filters.company}
               onChange={(e) => setFilters({ ...filters, company: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className={selectClass}
             >
               {companies.map((company) => (
                 <option key={company} value={company}>
@@ -131,11 +135,11 @@ export const QuestionBank = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Topic</label>
+            <label className={labelClass}>Topic</label>
             <select
               value={filters.topic}
               onChange={(e) => setFilters({ ...filters, topic: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className={selectClass}
             >
               {topics.map((topic) => (
                 <option key={topic} value={topic}>
@@ -146,11 +150,11 @@ export const QuestionBank = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Difficulty</label>
+            <label className={labelClass}>Difficulty</label>
             <select
               value={filters.difficulty}
               onChange={(e) => setFilters({ ...filters, difficulty: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className={selectClass}
             >
               {difficulties.map((difficulty) => (
                 <option key={difficulty} value={difficulty}>
@@ -161,14 +165,14 @@ export const QuestionBank = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+            <label className={labelClass}>Search</label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-zinc-500 w-5 h-5" />
               <input
                 type="text"
                 value={filters.search}
                 onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                className={`${selectClass} pl-10`}
                 placeholder="Search questions..."
               />
             </div>
@@ -176,18 +180,19 @@ export const QuestionBank = () => {
         </div>
 
         <div className="mt-4 flex items-center justify-between">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-zinc-400">
             Showing {filteredQuestions.length} questions
           </p>
           <button
             onClick={() => setFilters({ company: 'all', topic: 'all', difficulty: 'all', search: '' })}
-            className="text-sm text-blue-600 hover:underline"
+            className="text-sm text-orange-600 dark:text-orange-400 hover:underline"
           >
             Clear Filters
           </button>
         </div>
       </div>
 
+      {/* Question list */}
       <div className="space-y-4 mb-6">
         {paginatedQuestions.map((question, idx) => (
           <motion.div
@@ -195,34 +200,31 @@ export const QuestionBank = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.05 }}
-            className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+            className="bg-white dark:bg-zinc-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-zinc-800"
           >
             <div className="flex items-start justify-between mb-3">
               <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+                <div className="flex items-center gap-2 mb-2 flex-wrap">
+                  <span className="bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400 px-3 py-1 rounded-full text-xs font-semibold">
                     {question.company}
                   </span>
-                  <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  <span className="bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-400 px-3 py-1 rounded-full text-xs font-semibold">
                     {question.topic}
                   </span>
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getDifficultyColor(question.difficulty)}`}>
                     {question.difficulty}
                   </span>
                 </div>
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">
+                <h3 className="font-semibold text-lg text-gray-900 dark:text-zinc-100 mb-2">
                   {question.question}
                 </h3>
               </div>
-              <button
-                onClick={() => toggleBookmark(question.id)}
-                className="ml-4"
-              >
+              <button onClick={() => toggleBookmark(question.id)} className="ml-4 shrink-0">
                 <Bookmark
                   className={`w-5 h-5 ${
                     bookmarkedQuestions.has(question.id)
                       ? 'fill-yellow-400 text-yellow-400'
-                      : 'text-gray-400'
+                      : 'text-gray-400 dark:text-zinc-500'
                   }`}
                 />
               </button>
@@ -233,7 +235,7 @@ export const QuestionBank = () => {
                 {(question.options as string[]).map((option, optIdx) => (
                   <div
                     key={optIdx}
-                    className="px-4 py-2 bg-gray-50 rounded-lg text-sm"
+                    className="px-4 py-2 bg-gray-50 dark:bg-zinc-800 rounded-lg text-sm text-gray-800 dark:text-zinc-300"
                   >
                     {String.fromCharCode(65 + optIdx)}. {option}
                   </div>
@@ -245,7 +247,7 @@ export const QuestionBank = () => {
               onClick={() =>
                 setExpandedQuestion(expandedQuestion === question.id ? null : question.id)
               }
-              className="flex items-center gap-2 text-blue-600 font-medium hover:underline"
+              className="flex items-center gap-2 text-orange-600 dark:text-orange-400 font-medium hover:underline"
             >
               <BookOpen className="w-4 h-4" />
               {expandedQuestion === question.id ? 'Hide Answer' : 'Show Answer'}
@@ -260,14 +262,14 @@ export const QuestionBank = () => {
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg"
+                className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800/50 rounded-lg"
               >
-                <p className="font-semibold text-green-800 mb-2">Answer:</p>
-                <p className="text-gray-900">{question.answer}</p>
+                <p className="font-semibold text-green-800 dark:text-green-400 mb-2">Answer:</p>
+                <p className="text-gray-900 dark:text-zinc-200">{question.answer}</p>
                 {question.explanation && (
                   <div className="mt-3">
-                    <p className="font-semibold text-green-800 mb-2">Explanation:</p>
-                    <p className="text-gray-700">{question.explanation}</p>
+                    <p className="font-semibold text-green-800 dark:text-green-400 mb-2">Explanation:</p>
+                    <p className="text-gray-700 dark:text-zinc-300">{question.explanation}</p>
                   </div>
                 )}
               </motion.div>
@@ -276,12 +278,13 @@ export const QuestionBank = () => {
         ))}
       </div>
 
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-white border border-gray-300 rounded-lg disabled:opacity-50 hover:bg-gray-50"
+            className="px-4 py-2 bg-white dark:bg-zinc-800 border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-zinc-300 rounded-lg disabled:opacity-50 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors"
           >
             Previous
           </button>
@@ -293,10 +296,10 @@ export const QuestionBank = () => {
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className={`w-10 h-10 rounded-lg font-semibold ${
+                  className={`w-10 h-10 rounded-lg font-semibold transition-colors ${
                     currentPage === page
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-white border border-gray-300 hover:bg-gray-50'
+                      ? 'bg-orange-600 text-white'
+                      : 'bg-white dark:bg-zinc-800 border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-zinc-300 hover:bg-gray-50 dark:hover:bg-zinc-700'
                   }`}
                 >
                   {page}
@@ -308,7 +311,7 @@ export const QuestionBank = () => {
           <button
             onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-white border border-gray-300 rounded-lg disabled:opacity-50 hover:bg-gray-50"
+            className="px-4 py-2 bg-white dark:bg-zinc-800 border border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-zinc-300 rounded-lg disabled:opacity-50 hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors"
           >
             Next
           </button>

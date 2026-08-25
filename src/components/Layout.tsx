@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { ChatBot } from './ChatBot';
 import {
   LayoutDashboard,
   FileQuestion,
@@ -171,6 +172,9 @@ export const Layout = ({ children, currentPage, onNavigate }: LayoutProps) => {
       <main className="lg:ml-64 pt-16 lg:pt-0 min-h-screen">
         {children}
       </main>
+
+      {/* ── AI Chat Bubble (every page) ──────────────────────────────────── */}
+      <ChatBot onNavigate={onNavigate} />
     </div>
   );
 };
