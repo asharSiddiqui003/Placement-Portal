@@ -17,7 +17,7 @@ import { DSAHub } from './pages/DSAHub';
 // Set to true to skip Supabase auth and jump straight to the Dashboard.
 // ⚠️  REMEMBER to set back to false before committing / deploying!
 // ─────────────────────────────────────────────────────────────────────────────
-const DEV_BYPASS = true;
+const DEV_BYPASS = false;
 
 const DEV_MOCK_PROFILE = {
   id: 'dev-user-123',

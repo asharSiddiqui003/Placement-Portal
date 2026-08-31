@@ -19,17 +19,17 @@ interface ChatBotProps {
 
 // ─── Navigation command parser ────────────────────────────────────────────────
 const NAV_PAGES: Record<string, string> = {
-  'dsa-hub':       'dsa-hub',
-  'dsa':           'dsa-hub',
-  'questions':     'questions',
+  'dsa-hub': 'dsa-hub',
+  'dsa': 'dsa-hub',
+  'questions': 'questions',
   'question-bank': 'questions',
-  'mock-tests':    'mock-tests',
-  'mock':          'mock-tests',
-  'aptitude':      'mock-tests',
-  'dashboard':     'dashboard',
-  'profile':       'profile',
-  'analytics':     'analytics',
-  'resume':        'resume',
+  'mock-tests': 'mock-tests',
+  'mock': 'mock-tests',
+  'aptitude': 'mock-tests',
+  'dashboard': 'dashboard',
+  'profile': 'profile',
+  'analytics': 'analytics',
+  'resume': 'resume',
 };
 
 function extractNavCommand(text: string): string | null {
@@ -143,7 +143,7 @@ async function callGemini(
 
 // ─── ChatBot component ────────────────────────────────────────────────────────
 export const ChatBot = ({ onNavigate }: ChatBotProps) => {
-  const [isOpen, setIsOpen]     = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
@@ -152,14 +152,14 @@ export const ChatBot = ({ onNavigate }: ChatBotProps) => {
       ts: new Date(),
     },
   ]);
-  const [input, setInput]       = useState('');
-  const [loading, setLoading]   = useState(false);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // Track multi-turn history (user + model turns)
   const historyRef = useRef<Array<{ role: 'user' | 'model'; text: string }>>([]);
 
   const bottomRef = useRef<HTMLDivElement>(null);
-  const inputRef  = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Auto-scroll to latest message
   useEffect(() => {
@@ -184,10 +184,10 @@ export const ChatBot = ({ onNavigate }: ChatBotProps) => {
       const raw = await callGemini(historyRef.current, text);
 
       // Record in history
-      historyRef.current.push({ role: 'user',  text });
+      historyRef.current.push({ role: 'user', text });
       historyRef.current.push({ role: 'model', text: raw });
 
-      const navPage     = extractNavCommand(raw);
+      const navPage = extractNavCommand(raw);
       const cleanedText = cleanText(raw);
 
       const botMsg: Message = {
@@ -231,11 +231,10 @@ export const ChatBot = ({ onNavigate }: ChatBotProps) => {
       {/* ── Floating Bubble ───────────────────────────────────────────────── */}
       <motion.button
         onClick={() => setIsOpen(o => !o)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-colors duration-200 ${
-          isOpen
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-colors duration-200 ${isOpen
             ? 'bg-gray-700 dark:bg-zinc-700 text-white'
             : 'bg-orange-600 hover:bg-orange-700 text-white'
-        }`}
+          }`}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}
         aria-label={isOpen ? 'Close chat' : 'Open AI assistant'}
@@ -295,18 +294,16 @@ export const ChatBot = ({ onNavigate }: ChatBotProps) => {
                   key={msg.id}
                   className={`flex items-start gap-2.5 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
                 >
-                  <div className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-white mt-0.5 ${
-                    msg.role === 'bot'
+                  <div className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-white mt-0.5 ${msg.role === 'bot'
                       ? 'bg-orange-600 dark:bg-orange-700'
                       : 'bg-gray-700 dark:bg-zinc-600'
-                  }`}>
+                    }`}>
                     {msg.role === 'bot' ? <Bot className="w-3.5 h-3.5" /> : <User className="w-3.5 h-3.5" />}
                   </div>
-                  <div className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
-                    msg.role === 'user'
+                  <div className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${msg.role === 'user'
                       ? 'bg-orange-600 text-white rounded-tr-sm'
                       : 'bg-gray-100 dark:bg-zinc-800 text-gray-800 dark:text-zinc-200 rounded-tl-sm'
-                  }`}>
+                    }`}>
                     {msg.text}
                   </div>
                 </div>
